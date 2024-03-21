@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  h2 {
+    color: #333; 
+    text-align: center;
+    font-size: 30px;
+  }
+
+  form {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+  }
+
+  form label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  form input,
+  form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  .preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .preview-image {
+    max-width: 300px; /* Set the max-width to 300px */
+    max-height: 100px; /* Adjust the max-height as needed for your thumbnails */
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<h2>Quản Lý Thông Tin</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div class="preview-container"></div>
+  <button type="submit">Update</button>
+</form>
+
+<script>
+  $(document).ready(function() {
+    $('input[name="images"]').on('change', function() {
+      var fileList = this.files;
+      var previewContainer = $('.preview-container');
+
+      previewContainer.empty();
+
+      for (var i = 0; i < fileList.length; i++) {
+        var imageSrc = URL.createObjectURL(fileList[i]);
+        var imageElement = $('<img>').attr('src', imageSrc).addClass('preview-image');
+        previewContainer.append(imageElement);
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+<header class="header">
+
+    <nav class="navbar nav-1">
+       <section class="flex">
+          <a href="{% url 'home' %}" class="logo"><i class="fas fa-house"></i>MyHome</a>
+ 
+          <ul>
+             <li><a href="{% url 'add_rooms'%}">Đăng Ký Phòng<i class="fas fa-paper-plane"></i></a></li>
+          </ul>
+       </section>
+    </nav>
+ 
+    <nav class="navbar nav-2">
+       <section class="flex">
+          <div id="menu-btn" class="fas fa-bars"></div>
+ 
+          <div class="menu">
+
+             <ul>
+                <li><a href="#">Danh Mục<i class="fas fa-angle-down"></i></a>
+                   <ul>
+                     {% for RoomCategory in links %}
+                      <li><a href="{{RoomCategory.get_url}}">{{RoomCategory.Name_LoaiPhong}}</a></li>
+                     {% endfor %}
+                   </ul>
+                </li>
+                <li><a href="#">Hỗ Trợ<i class="fas fa-angle-down"></i></a>
+                   <ul>
+                      
+                      <li><a href="{% url 'FeedBack'%}">Liên Lạc</a></i></li>
+                      
+                   </ul>
+                </li>
+             </ul>
+          </div>
+ 
+          <ul>
+             <li><a href="{% url 'saved_rooms' %}">Yêu Thích<i class="far fa-heart"></i></a></li>
+             <li><a href="#">Tài Khoản<i class="fas fa-angle-down"></i></a>
+                <ul>
+                  {% if  user.id is None %}
+                  <li><a href="{% url 'login'%}">Đăng Nhập</a></li>
+                  <li><a href="{% url 'register'%}">Đăng Ký</a></li>
+                   {% else %}
+                   <li><a href="#">Chào Mừng: {{user.username}}</a></li>
+                   <li><a href="{% url 'rooms_list' %}">Quản Lý Phòng Trọ</a></li>
+                   <li><a href="{% url 'update_user_info' %}">Quản Lý Thông Tin Cá Nhân</a></li>
+                   <li><a href="{% url 'logout'%}">LogOut</a></li>
+                </ul>
+                  {% endif %}
+             </li>
+          </ul>
+       </section>
+    </nav>
+ 
+</header>

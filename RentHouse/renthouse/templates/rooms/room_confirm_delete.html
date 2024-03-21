@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  form {
+    display: inline-block;
+  }
+
+  button {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #c82333;
+  }
+</style>
+
+  <h2>Xác nhận xóa</h2>
+  <p>Bạn có chắc chắn muốn xóa phòng {{ rooms.Name_Room }}không?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Xóa</button>
+  </form>
+
+{% endblock %}

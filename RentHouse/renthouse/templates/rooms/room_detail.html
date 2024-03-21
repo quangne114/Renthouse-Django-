@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+   .feedback {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+   }
+   .feedback-description {
+      font-weight: bold;
+      margin-bottom: 5px;
+   }
+
+   .feedback-date {
+      color: #888;
+   }
+   .form-inline {
+    display: flex;
+   }
+
+   .inline-form {
+      margin-right: 20px; 
+      margin-top: 10px;
+   }
+   .inline-link {
+    display: inline-block;
+    padding: 10px 16px;
+    text-decoration: none;
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px; 
+    margin-top: 10px;
+   }
+
+   .inline-link:hover {
+      background-color: #2a2828;
+   }
+
+   .inline-link:active {
+      background-color: #990000;
+   }
+</style>
+<section class="view-property">
+
+    <div class="details">
+       <div class="thumb">
+          <div class="big-image">
+             <img id="bigImage" src="{{ single_room.mainimage.url }}" alt="">
+          </div>
+          <div class="small-images">
+            {% for image in single_room.images.all %}
+            <img class="small-image" src="{{ image.image.url }}" alt="">
+            {% endfor %}
+          </div>
+       </div>
+       <h3 class="name">{{ single_room.Name_Room }}</h3>
+       <p class="location"><i class="fas fa-map-marker-alt">{{ single_room.Address }}</i><span></span></p>
+       <div class="info">
+       </div>
+       <h3 class="title">THÔNG TIN PHÒNG TRỌ:</h3>
+       <div class="flex">
+          <div class="box">
+             <p><i>Chủ trọ:</i><span>{{single_room.account.username}}</span></p>
+             <p><i>Số điện thoại chủ trọ:</i><span>{{single_room.account.phone_number}}</span></p>
+             <p><i>Giá phòng:</i><span>{{single_room.Price }}</span></p>
+             <p><i>Giá Cọc:</i><span>{{single_room.Price_deposit }}</span></p>
+          </div>
+          <div class="box">
+             <p><i>Loại phòng:</i><span>{{single_room.category }}</span></p>
+             <p><i>Diện tích:</i><span>{{single_room.roomarea }}</span></p>
+             <p><i>Ngày đăng:</i><span>{{single_room.created_date }}</span></p>
+             <p><i>Ngày hết:</i><span>{{single_room.expiration_date}}</span></p>
+          </div>
+       </div>
+       <h3 class="title">MÔ TẢ:</h3>
+       <p class="description">{{ single_room.Description }}</p>
+       <h3 class="title">PHẢN HỒI:</h3>
+       {% if feedback_list %}
+          {% for feedback in feedback_list %}
+          <div class="feedback">
+             <p class="feedback-description">{{ feedback.account }}</p>
+             <p class="feedback-description">{{ feedback.Description }}</p>
+             <p class="feedback-date">{{ feedback.date_feedback }}</p>
+          </div>
+          {% endfor %}
+       {% else %}
+          <p>Không có phản hồi nào cho phòng trọ này.</p>
+       {% endif %}
+       <div class="form-inline">
+         <form action="{% url 'save_room' room_id=single_room.id %}" method="post" class="inline-form">
+            <a href="{% url 'save_room' room_id=single_room.id %}" class="inline-link">YÊU THÍCH</a>
+         </form>
+         <div class="form-inline">
+            <form action="{% url 'RoomRentalTicket' %}" method="post" class="inline-form">
+                <a href="{% url 'RoomRentalTicket' %}" class="inline-link">THUÊ</a>
+            </form>
+        </div>
+     </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+         var bigImage = document.getElementById("bigImage");
+         var smallImages = document.querySelectorAll(".small-image");
+   
+         smallImages.forEach(function(smallImage) {
+            smallImage.addEventListener("click", function() {
+               bigImage.src = smallImage.src;
+            });
+         });
+      });
+   </script>
+</section>
+{% endblock content %}

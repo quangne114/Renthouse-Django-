@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .container {
+  margin: 20px;
+}
+
+/* Style for room container */
+.room-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+/* Style for room name */
+.room-container h2 {
+  color: #333;
+}
+
+/* Style for room address */
+.room-container p {
+  color: #555;
+}
+
+/* Style for buttons */
+.btn-custom {
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.btn-warning {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: #fff;
+}
+.container h1 {
+  text-align: center;
+}
+</style>
+  <div class="container">
+    <h1>Danh sách các phòng của bạn</h1>
+    {% for room in rooms %}
+      <div class="room-container">
+        <h2>{{ room.Name_Room }}</h2>
+        <p>{{ room.Address }}</p>
+        <!-- Các thông tin khác về phòng -->
+        <a href="{% url 'room_detail' category_slug=room.category.slug room_slug=room.slug %}" class="btn btn-primary btn-custom">View Details</a>
+        <a href="{% url 'room_edit' category_slug=room.category.slug room_slug=room.slug %}" class="btn btn-warning btn-custom">Edit</a>
+        <a href="{% url 'room_delete' category_slug=room.category.slug room_slug=room.slug %}" class="btn btn-danger btn-custom">Delete</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}

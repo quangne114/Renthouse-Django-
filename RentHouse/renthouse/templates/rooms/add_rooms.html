@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  /* Các lớp chính */
+.form-container {
+max-width: 400px;
+margin: 0 auto;
+padding: 20px;
+}
+
+.form-group {
+margin-bottom: 15px;
+}
+
+/* Các thẻ chính */
+h3 {
+margin-top: 0;
+}
+
+label {
+display: block;
+margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+input[type="submit"] {
+width: 100%;
+padding: 10px;
+background-color: #ff0000;
+color: #fff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+p {
+margin-top: 20px;
+}
+
+a {
+color: #4CAF50;
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+.form-container {
+  max-width: 100%;
+}
+}
+</style>
+<section class="form-container">
+  <form action="{% url 'add_rooms' %}" method="POST" enctype="multipart/form-data">
+    <h3>Đăng Ký Phòng</h3>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="id_images" multiple>
+      Upload Images:
+      <input type="file" name="images" id="id_images" multiple>
+    </label>
+    <input type="submit" value="Đăng Ký Ngay" name="submit" class="btn btn-primary">
+  </form>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+
+  $('#id_Name_Room').on('input', function() {
+    var nameRoom = $(this).val();
+    var slug = slugify(nameRoom);
+    $('#id_slug').val(slug);
+  });
+
+
+  function slugify(text) {
+    text = text.toLowerCase().trim();
+    text = text.replace(/[^a-z0-9-]/g, '-');
+    text = text.replace(/-+/g, '-');
+    return text;
+  }
+});
+</script>
+{% endblock content %}

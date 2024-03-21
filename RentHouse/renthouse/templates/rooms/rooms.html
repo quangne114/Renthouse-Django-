@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- listings section starts  -->
+<style>
+   .pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  color: white;
+  background-color: red;
+  padding: 8px 12px;
+  text-decoration: none;
+  margin: 0 5px;
+  border-radius: 3px;
+}
+
+.pagination a.active {
+  background-color: darkred;
+}
+
+.pagination a:hover {
+  background-color: crimson;
+}
+.not-found {
+    text-align: center;
+    margin-top: 20px; /* Adjust the margin based on your design */
+}
+
+.not-found h1 {
+    color: #333; /* Change the color to your preference */
+}
+
+.not-found img {
+    max-width: 100%; /* Make sure the image doesn't exceed its container */
+    height: auto; /* Maintain the image's aspect ratio */
+    margin-top: 10px; /* Adjust the margin based on your design */
+}
+</style>
+<section class="listings">
+    {% if 'search' in request.path %}
+    <h1 class="heading">Kết Quả Tìm Kiếm</h1>
+    {% else %}
+    <h1 class="heading">Tất Cả Các Phòng</h1>
+    {% endif %}
+ 
+    <div class="box-container">
+        {% for rooms in rooms  %}
+       <div class="box">
+          <div class="admin">
+            <h3>{{rooms.id}}</h3>
+             <div>
+                <p>{{ rooms.account.username }}</p>
+                <span>{{rooms.created_date}}</span>
+             </div>
+          </div>
+          <div class="thumb">
+             <p class="type"><span>house</span><span>sale</span></p>
+             <img src="{{rooms.mainimage.url}}" alt="">
+          </div>
+          <h3 class="name">{{rooms.Name_Room}}</h3>
+          <p class="location"><i class="fas fa-map-marker-alt"></i><span>{{rooms.Address}}</span></p>
+          <div class="flex">
+             <p><i class="fas fa-bed"></i><span>{{rooms.category}}</span></p>
+             <p><i class="fas fa-bath"></i><span>{{rooms.created_date}}</span></p>
+             <p><i class="fas fa-maximize"></i><span>{{rooms.roomarea}}</span></p>
+          </div>
+          <a href="{{rooms.get_url}}" class="btn">Xem chi tiết phòng</a>   
+       </div>
+       {% endfor %}
+       {% if not rooms %}
+       <div class="not-found">
+        <h1>Không tìm thấy kết quả tìm kiếm</h1>
+        <img src="https://bizflyportal.mediacdn.vn/bizflyportal/459/347/2020/06/02/17/37/70515910726734841.jpg" alt="">
+    </div>
+       {% endif %}
+    </div>  
+
+    {% if rooms.has_other_pages %}
+    <div class="pagination">
+        {% if rooms.has_previous %}
+            <a href="?page={{ rooms.previous_page_number }}" class="prev">Previous</a>
+        {% else %}
+            <a href="#" class="prev">Previous</a>
+        {% endif %}
+
+        {% for i in rooms.paginator.page_range %}
+            {% if rooms.number == i %}
+                <a href="#" class="active">{{ i }}</a>
+            {% else %}
+                <a href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+         {% if rooms.has_next %}
+         <a class="next" href="?page={{ rooms.next_page_number}}">Next</a>
+         {% else %}
+         <a class="next" href="#">Next</a>
+         {% endif %}
+    </div>
+{% endif %}
+
+ </section>
+{% endblock content %}

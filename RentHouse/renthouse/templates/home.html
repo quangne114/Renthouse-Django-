@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+<!-- home section starts  -->
+
+<div class="home">
+
+   <section class="center">
+
+      <form action="{% url 'search' %}" method="get">
+         <h3>Tìm Kiếm</h3>
+         <div class="box">
+            <p>Tìm Kiếm Theo Quận <span>*</span></p>
+            <input type="text" name="keyword" required maxlength="50" placeholder="Tìm Kiếm" class="input" >
+         </div>
+         <!-- <div class="box">
+            <p>Tìm Kiếm Theo Diện Tích <span>*</span></p>
+            <input type="text" name="location" required maxlength="50" placeholder="enter ciyt name" class="input">
+         </div>
+         <div class="box">
+            <p>Tìm Kiếm Theo Giá <span>*</span></p>
+            <input type="text" name="location" required maxlength="50" placeholder="enter ciyt name" class="input">
+         </div> -->
+         <!-- <div class="flex">
+            <div class="box">
+               <p>Loại Phòng <span>*</span></p>
+               <select name="type" class="input" required>
+                  {% for RoomCategory in links %}
+                  <option value="flat" href="{{RoomCategory.get_url}}">{{RoomCategory.Name_LoaiPhong}}</option>
+                 {% endfor %}
+                
+               </select>
+            </div>    
+         </div> -->
+         <input type="submit" value="search property" name="search" class="btn">
+      </form>
+
+   </section>
+
+</div>
+
+<!-- home section ends -->
+
+<!-- services section starts  -->
+
+<section class="services">
+
+   <h1 class="heading">Dịch vụ của chúng tôi</h1>
+
+   <div class="box-container">
+
+   
+      <div class="box">
+         <img src="{%static 'images/icon-2.png'%}" alt="">
+         <h3>rent house</h3>
+         <p>Website hỗ trợ tìm kiếm phòng trọ, căn hộ, nhà ở một cách tiện lợi và nhanh chóng.</p>
+      </div>
+
+   
+
+      <div class="box">
+         <img src="{%static 'images/icon-4.png'%}" alt="">
+         <h3>Đa dạng phòng</h3>
+         <p>Website đặt mục tiêu phục vụ đa dạng đối tượng phù hợp với mọi nhu cầu tìm kiếm chỗ ở.</p>
+      </div>
+
+   
+
+      <div class="box">
+         <img src="{%static 'images/icon-6.png'%}" alt="">
+         <h3>Hỗ trợ 24/7</h3>
+         <p>Website có đội ngũ hỗ trợ luôn đợi để có thể phục vụ người dùng mọi lúc mọi nơi.</p>
+      </div>
+
+   </div>
+
+</section>
+
+<!-- services section ends -->
+
+<!-- listings section starts  -->
+
+<section class="listings">
+  
+   <h1 class="heading">Bài đăng mới nhất</h1>
+
+   <div class="box-container">
+      {% for rooms in rooms %}
+      <div class="box">
+         <div class="admin">
+            <h3>{{rooms.id}}</h3>
+            <div>
+               <p>{{rooms.account.username}}</p>
+               <span>{{rooms.created_date}}</span>
+            </div>
+         </div>
+         <div class="thumb">
+            <p class="type"><span>House</span><span>Sale</span></p>
+            <img src="{{rooms.mainimage.url}}" alt="">
+         </div>
+         <h3 class="name">{{rooms.Name_Room}}</h3>
+         <p class="location"><i class="fas fa-map-marker-alt"></i><span>{{rooms.Address}}</span></p>
+         <div class="flex">
+            <p><i class="fas fa-bed"></i><span>{{rooms.category}}</span></p>
+            <p><i class="fas fa-bath"></i><span>{{rooms.created_date}}</span></p>
+            <p><i class="fas fa-maximize"></i><span>{{rooms.roomarea}}</span></p>
+         </div>
+         <a href="{{rooms.get_url}}" class="btn">Xem chi tiết</a> 
+      </div>
+      {% endfor %}
+   </div>
+   <div style="margin-top: 2rem; text-align:center;">
+      <a href="{% url 'room'%}" class="inline-btn">Xem tất cả các bài đăng</a>
+   </div>
+
+</section>
+
+<!-- listings section ends -->
+
+
+<!-- custom js file link  -->
+<script src="{%static 'js/script.js'%}"></script>
+
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  h2 {
+    text-align: center;
+  }</style>
+  <h2>Danh sách phòng yêu thích</h2>
+  <ul>
+    {% for saved_room_list in saved_rooms %}
+      <li>
+        <a href="{% url 'room_detail' category_slug=saved_room_list.room.category.slug room_slug=saved_room_list.room.slug %}">
+          {{ saved_room_list.room.Name_Room }}
+          
+          {% if saved_room_list.id %}
+            <a href="{% url 'delete_saved_room' saved_room_list.id %}">Delete</a>
+          {% else %}a
+            <span>Delete</span>
+          {% endif %}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
